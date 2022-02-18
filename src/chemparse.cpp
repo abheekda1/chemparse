@@ -31,9 +31,18 @@ namespace chemparse {
                         // Make sure it's less than two less the length of the array to prevent accessing something outside
                         if (i < chemFormula.size() - 2) {
                             if (isdigit(chemFormula[i + 2])) {
-                                cout << "doing this thing" << endl;
-                                element.amount = chemFormula[i + 2] - '0' /*convert to int from val stored in char*/;
-                                i++;
+                                string amtString;
+                                int numLength = 0;
+                                for (int j = i + 1; j < chemFormula.size(); j++) {
+                                    if (isdigit(chemFormula[j])) {
+                                        amtString += chemFormula[j];
+                                        numLength++;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                                element.amount = stol(amtString);
+                                i += numLength;
                             } else {
                                 element.amount = 1;
                             }
@@ -56,8 +65,6 @@ namespace chemparse {
                         }
                         element.amount = stol(amtString);
                         i += numLength;
-                        //element.amount = chemFormula[i + 1] - '0';
-                        //i++;
                     }
                     // Otherwise, this one is its own element
                 } else {
@@ -78,8 +85,6 @@ namespace chemparse {
                             }
                             element.amount = stol(amtString);
                             i += numLength;
-                            //element.amount = chemFormula[i + 1] - '0' /*convert to int from val stored in char*/;
-                            //i++;
                         } else {
                             element.amount = 1;
                         }
