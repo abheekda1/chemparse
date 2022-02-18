@@ -33,7 +33,7 @@ namespace chemparse {
                             if (isdigit(chemFormula[i + 2])) {
                                 string amtString;
                                 int numLength = 0;
-                                for (int j = i + 1; j < chemFormula.size(); j++) {
+                                for (int j = i + 2; j < chemFormula.size(); j++) {
                                     if (isdigit(chemFormula[j])) {
                                         amtString += chemFormula[j];
                                         numLength++;
@@ -85,6 +85,8 @@ namespace chemparse {
                             }
                             element.amount = stol(amtString);
                             i += numLength;
+                            //element.amount = chemFormula[i + 1] - '0' /*convert to int from val stored in char*/;
+                            //i++;
                         } else {
                             element.amount = 1;
                         }
