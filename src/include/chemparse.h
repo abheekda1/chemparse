@@ -9,7 +9,7 @@ namespace chemparse {
     public:
         string symbol;
         string name;
-        int amount;
+        long amount;
     };
 
     vector<Element> parseFormulaToElements(string chemFormula);
