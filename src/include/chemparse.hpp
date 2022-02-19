@@ -10,5 +10,13 @@ namespace chemparse {
         long amount;
     };
 
+    class Compound {
+    public:
+        std::vector<Element> elements;
+        virtual long getMolarMass() = 0;
+    };
+
     std::vector<Element> parseFormulaToElements(std::string chemFormula);
-} // namespace chemparse
+
+    void populateElement(Element &element);
+}// namespace chemparse

@@ -1,4 +1,4 @@
-#include "chemparse.h"
+#include "chemparse.hpp"
 #include <climits>
 
 void waitForExit() {
@@ -15,11 +15,13 @@ int main() {
     std::vector<chemparse::Element> elements = chemparse::parseFormulaToElements(chemFormula);
 
     std::cout << std::endl;
-    for (const chemparse::Element& element : elements) {
+    for (chemparse::Element& element : elements) {
+        chemparse::populateElement(element);
         long amount = element.amount;
         std::string symbol = element.symbol;
+        std::string name = element.name;
         std::string isOrAre = (amount == 1 ? "is" : "are");
-        std::cout << "There " << isOrAre << " " << amount << " of " << symbol << std::endl;
+        std::cout << "There " << isOrAre << " " << amount << " " << name << " (" << symbol << ")" << std::endl;
     }
 
     waitForExit();
