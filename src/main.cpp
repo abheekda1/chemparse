@@ -1,46 +1,27 @@
 #include "chemparse.h"
-#include <cstdio>
-#include <sstream>
+#include <climits>
 
-struct Element_t {
-    int atomicNumber;
-    int name;
-    int symbol;
-    int atomicMass;
-    int numProtons;
-    int numNeutrons;
-    int numElectrons;
-};
-
-int main() {
-    /*freopen("test.csv", "r", stdin);
-
-    for (int i = 0; i < 118; i++) {
-        std::string currentElementRaw; std::cin >> currentElementRaw;
-        std::string currentData;
-        vector<std::string> currentDataParsed;
-        for (int j = 0; j < 7; j++) {
-            while (currentElementRaw[j] != ',') {
-                currentData += currentElementRaw[j];
-            }
-            std::stringstream ss(currentData);
-            std::cout << currentData;
-        }
-        std::cout << currentElementRaw << std::endl;
-    }*/
-    cout << "Please enter the formula:" << endl;
-
-    string chemFormula; cin >> chemFormula;
-    vector<chemparse::Element> elements = chemparse::parseFormulaToElements(chemFormula);
-
-    cout << endl;
-    for (int i = 0; i < elements.size(); i++) {
-        int amount;
-        string symbol;
-        cout << "There are " << elements[i].amount << " " << elements[i].symbol << endl;
-    }
-
-    cout << "PLEASE PRESS ENTER OR CLOSE THE WINDOW TO TERMINATE THE PROGRAM:" << endl;
+void waitForExit() {
+    std::cout << std::endl;
+    std::cout << "PLEASE PRESS ENTER OR CLOSE THE WINDOW TO TERMINATE THE PROGRAM:" << std::endl;
     std::cin.clear(); std::cin.ignore(INT_MAX, '\n');
     std::cin.get();
+}
+
+int main() {
+    std::cout << "Please enter the formula:" << std::endl;
+
+    std::string chemFormula; std::cin >> chemFormula;
+    std::vector<chemparse::Element> elements = chemparse::parseFormulaToElements(chemFormula);
+
+    std::cout << std::endl;
+    for (const chemparse::Element& element : elements) {
+        long amount = element.amount;
+        std::string symbol = element.symbol;
+        std::string isOrAre;
+        isOrAre = (amount == 1 ? "is" : "are");
+        std::cout << "There " << isOrAre << " " << amount << " of " << symbol << std::endl;
+    }
+
+    waitForExit();
 }

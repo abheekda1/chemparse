@@ -1,8 +1,5 @@
 #include "chemparse.h"
 
-using namespace std;
-using namespace chemparse;
-
 bool checkCapitalCase(char currentChar) {
     if (toupper(currentChar) == currentChar) {
         return true;
@@ -11,8 +8,8 @@ bool checkCapitalCase(char currentChar) {
 }
 
 namespace chemparse {
-    vector<Element> parseFormulaToElements(string chemFormula) {
-        vector<Element> elements;
+    std::vector<Element> parseFormulaToElements(std::string chemFormula) {
+        std::vector<Element> elements;
 
         for (int i = 0; i < chemFormula.size(); i ++) {
             char currentChar = chemFormula[i];
@@ -31,7 +28,7 @@ namespace chemparse {
                         // Make sure it's less than two less the length of the array to prevent accessing something outside
                         if (i < chemFormula.size() - 2) {
                             if (isdigit(chemFormula[i + 2])) {
-                                string amtString;
+                                std::string amtString;
                                 int numLength = 0;
                                 for (int j = i + 2; j < chemFormula.size(); j++) {
                                     if (isdigit(chemFormula[j])) {
@@ -53,7 +50,7 @@ namespace chemparse {
                         // Increment i to skip next char since it's part of this element (just speeds it up a bit -- not necessary)
                         i++;
                     } else {
-                        string amtString;
+                        std::string amtString;
                         int numLength = 0;
                         for (int j = i + 1; j < chemFormula.size(); j++) {
                             if (isdigit(chemFormula[j])) {
@@ -73,7 +70,7 @@ namespace chemparse {
                     // Make sure it's less than two less the length of the array to prevent accessing something outside
                     if (i < chemFormula.size() - 1) {
                         if (isdigit(chemFormula[i + 1])) {
-                            string amtString;
+                            std::string amtString;
                             int numLength = 0;
                             for (int j = i + 1; j < chemFormula.size(); j++) {
                                 if (isdigit(chemFormula[j])) {

@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
-project(chem_molar_mass)
+project(chemical-formula-parser)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 include_directories(src/include)
 
-add_executable(chem_molar_mass
+add_executable(chemparse
         src/chemparse.cpp
         src/main.cpp)
