@@ -9,6 +9,9 @@ namespace chemparse {
         std::string name;
         double molarMass;
         double atomicMass;
+        int atomicNumber;
+        std::string discoverer;
+        std::string appearance;
         long amount;
     };
 

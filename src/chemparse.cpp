@@ -128,6 +128,9 @@ namespace chemparse {
                 element.name = elementData[i]["name"];
                 element.molarMass = double(elementData[i]["atomic_mass"]);
                 element.atomicMass = double(elementData[i]["atomic_mass"]);
+                element.atomicNumber = elementData[i]["number"];
+                element.appearance = elementData[i]["appearance"];
+                element.discoverer = elementData[i]["discovered_by"];
                 foundElement = true;
                 break;
             }
