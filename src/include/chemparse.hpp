@@ -22,5 +22,5 @@ namespace chemparse {
 
     std::vector<Element> parseFormulaToElements(std::string chemFormula);
 
-    void populateElement(Element &element);
+    bool populateElement(Element &element);
 }// namespace chemparse

@@ -93,13 +93,19 @@ namespace chemparse {
                         element.amount = 1;
                     }
                 }
-                elements.push_back(element);
+                bool foundElement = populateElement(element);
+                if (!foundElement) {
+                    elements.empty();
+                    break;
+                } else {
+                    elements.push_back(element);
+                }
             }
         }
         return elements;
     }
 
-    void populateElement(Element &element) {
+    bool populateElement(Element &element) {
         std::string symbol = element.symbol;
         long amount = element.amount;
 
@@ -116,14 +122,17 @@ namespace chemparse {
         }
 
         nlohmann::json elementData = nlohmann::json::parse(periodicTableData)["elements"];
+        bool foundElement = false;
         for (int i = 0; i < elementData.size(); i++) {
             if (elementData[i]["symbol"] == symbol) {
                 element.name = elementData[i]["name"];
                 element.molarMass = double(elementData[i]["atomic_mass"]);
                 element.atomicMass = double(elementData[i]["atomic_mass"]);
+                foundElement = true;
                 break;
             }
         }
+        return foundElement;
     }
 
     Compound::Compound(std::vector<Element> elmnts) : elements(elmnts) {}

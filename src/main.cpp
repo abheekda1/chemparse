@@ -9,26 +9,36 @@ void waitForExit() {
 }
 
 int main() {
-    std::cout << "Please enter the formula:" << std::endl;
+    while (true) {
+        std::cout << "> ";
 
-    std::string chemFormula; std::cin >> chemFormula;
-    std::vector<chemparse::Element> elements = chemparse::parseFormulaToElements(chemFormula);
+        std::string chemFormula;
+        std::cin >> chemFormula;
 
-    std::cout << std::endl;
-    for (chemparse::Element& element : elements) {
-        chemparse::populateElement(element);
-        long amount = element.amount;
-        std::string symbol = element.symbol;
-        std::string name = element.name;
-        std::string isOrAre = (amount == 1 ? "is" : "are");
-        std::cout << "There " << isOrAre << " " << amount << " " << name << " (" << symbol << ")" << std::endl;
+        if (chemFormula == "exit") {
+            std::cout << std::endl << "Exiting..." << std::endl;
+            exit(0);
+        }
+
+        std::vector<chemparse::Element> elements = chemparse::parseFormulaToElements(chemFormula);
+        if (elements.size() == 0) {
+            std::cout << "Invalid or empty formula." << std::endl;
+            continue;
+        }
+
+        std::cout << std::endl;
+        for (chemparse::Element &element: elements) {
+            long amount = element.amount;
+            std::string symbol = element.symbol;
+            std::string name = element.name;
+            std::string isOrAre = (amount == 1 ? "is" : "are");
+            std::cout << "There " << isOrAre << " " << amount << " " << name << " (" << symbol << ")" << std::endl;
+        }
+
+        chemparse::Compound compound(elements);
+        compound.getMolarMass();
+        std::cout << std::endl;
+        std::cout << "The total molar mass is: " << compound.getMolarMass() << " g/mol" << std::endl;
+        std::cout << "The total atomic mass is: " << compound.getMolarMass() << " amu" << std::endl;
     }
-
-    chemparse::Compound compound(elements);
-    compound.getMolarMass();
-    std::cout << std::endl;
-    std::cout << "The total molar mass is: " << compound.getMolarMass() << " g/mol" << std::endl;
-    std::cout << "The total atomic mass is: " << compound.getMolarMass() << " amu" << std::endl;
-
-    waitForExit();
 }
