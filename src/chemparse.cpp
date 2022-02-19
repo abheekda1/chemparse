@@ -95,7 +95,7 @@ namespace chemparse {
                 }
                 bool foundElement = populateElement(element);
                 if (!foundElement) {
-                    elements.empty();
+                    elements.clear();
                     break;
                 } else {
                     elements.push_back(element);
