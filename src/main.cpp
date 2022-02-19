@@ -18,8 +18,7 @@ int main() {
     for (const chemparse::Element& element : elements) {
         long amount = element.amount;
         std::string symbol = element.symbol;
-        std::string isOrAre;
-        isOrAre = (amount == 1 ? "is" : "are");
+        std::string isOrAre = (amount == 1 ? "is" : "are");
         std::cout << "There " << isOrAre << " " << amount << " of " << symbol << std::endl;
     }
 
