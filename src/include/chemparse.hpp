@@ -7,13 +7,17 @@ namespace chemparse {
     public:
         std::string symbol;
         std::string name;
+        double molarMass;
+        double atomicMass;
         long amount;
     };
 
     class Compound {
     public:
+        explicit Compound(std::vector<Element> elements);
+        double getMolarMass();
+    private:
         std::vector<Element> elements;
-        virtual long getMolarMass() = 0;
     };
 
     std::vector<Element> parseFormulaToElements(std::string chemFormula);

@@ -24,5 +24,11 @@ int main() {
         std::cout << "There " << isOrAre << " " << amount << " " << name << " (" << symbol << ")" << std::endl;
     }
 
+    chemparse::Compound compound(elements);
+    compound.getMolarMass();
+    std::cout << std::endl;
+    std::cout << "The total molar mass is: " << compound.getMolarMass() << " g/mol" << std::endl;
+    std::cout << "The total atomic mass is: " << compound.getMolarMass() << " amu" << std::endl;
+
     waitForExit();
 }

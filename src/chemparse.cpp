@@ -119,8 +119,20 @@ namespace chemparse {
         for (int i = 0; i < elementData.size(); i++) {
             if (elementData[i]["symbol"] == symbol) {
                 element.name = elementData[i]["name"];
+                element.molarMass = double(elementData[i]["atomic_mass"]);
+                element.atomicMass = double(elementData[i]["atomic_mass"]);
                 break;
             }
         }
+    }
+
+    Compound::Compound(std::vector<Element> elmnts) : elements(elmnts) {}
+
+    double Compound::getMolarMass() {
+        double molarMass = 0.0;
+        for (chemparse::Element element : elements) {
+            molarMass += double(element.amount) * element.molarMass;
+        }
+        return molarMass;
     }
 }
