@@ -101,7 +101,7 @@ namespace chemparse {
 
     void populateElement(Element &element) {
         std::string symbol = element.symbol;
-        int amount = element.amount;
+        long amount = element.amount;
 
         std::ifstream f("periodic-table.json");
         std::string periodicTableData;
