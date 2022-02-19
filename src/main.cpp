@@ -26,7 +26,6 @@ int main() {
             continue;
         }
 
-        std::cout << std::endl;
         for (chemparse::Element &element: elements) {
             long amount = element.amount;
             std::string symbol = element.symbol;
