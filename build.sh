@@ -3,4 +3,5 @@
 mkdir -p build/
 cd build/
 cmake ..
+make
 cp ../periodic-table.json ./
