@@ -26,9 +26,14 @@ int main() {
             continue;
         } else if (elements.size() == 1) {
             chemparse::Element element = elements[0];
-            std::cout << "The element " << element.name << " (" << element.symbol << ")"
-                << " appears as a " << element.appearance << " and was discovered by "
-                << element.discoverer << "." << std::endl;
+            std::cout << element.name << " (" << element.symbol << ")" << ": " << std::endl
+                << "Atomic Number: " << element.atomicNumber << std::endl
+                << "Atomic Mass: " << element.atomicMass << " amu" << std::endl
+                << "Molar Mass: " << element.molarMass << " g/mol" << std::endl
+                << "Discoverer: " << element.discoverer << std::endl
+                << "Appearance: " << element.appearance << std::endl
+                << std::endl << "(HINT: 0 or empty values mean unknown or simply not in this database)"
+                << std::endl;
         } else {
             for (chemparse::Element &element: elements) {
                 long amount = element.amount;

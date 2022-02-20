@@ -125,12 +125,14 @@ namespace chemparse {
         bool foundElement = false;
         for (int i = 0; i < elementData.size(); i++) {
             if (elementData[i]["symbol"] == symbol) {
-                element.name = elementData[i]["name"];
-                element.molarMass = double(elementData[i]["atomic_mass"]);
-                element.atomicMass = double(elementData[i]["atomic_mass"]);
-                element.atomicNumber = elementData[i]["number"];
-                element.appearance = elementData[i]["appearance"];
-                element.discoverer = elementData[i]["discovered_by"];
+                nlohmann::json currentElementData = elementData[i];
+                element.name = currentElementData.value("name", "");
+                element.molarMass = currentElementData.value("atomic_number", 0);
+                element.atomicMass = currentElementData.value("atomic_mass", 0);
+                element.molarMass = currentElementData.value("atomic_mass", 0);
+                element.atomicNumber = currentElementData.value("number", 0);
+                element.appearance = currentElementData.value("appearance", "");
+                element.discoverer = currentElementData.value("discovered_by", "");
                 foundElement = true;
                 break;
             }
