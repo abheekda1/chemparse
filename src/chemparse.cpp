@@ -128,8 +128,8 @@ namespace chemparse {
                 nlohmann::json currentElementData = elementData[i];
                 element.name = currentElementData.value("name", "");
                 element.molarMass = currentElementData.value("atomic_number", 0);
-                element.atomicMass = currentElementData.value("atomic_mass", 0);
-                element.molarMass = currentElementData.value("atomic_mass", 0);
+                element.atomicMass = currentElementData.value("atomic_mass", 0.0);
+                element.molarMass = currentElementData.value("atomic_mass", 0.0);
                 element.atomicNumber = currentElementData.value("number", 0);
                 element.appearance = currentElementData.value("appearance", "");
                 element.discoverer = currentElementData.value("discovered_by", "");
