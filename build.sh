@@ -4,4 +4,5 @@ mkdir -p build/
 cd build/
 cmake ..
 make
-cp ../periodic-table.json ./
+cp ../periodic-table.json ./bin
+echo "Copied periodic table JSON to bin directory"
