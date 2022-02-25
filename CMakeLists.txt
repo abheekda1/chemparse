@@ -9,3 +9,5 @@ include_directories(src/include)
 add_executable(chemparse
         src/chemparse.cpp
         src/main.cpp)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/periodic-table.json ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} COPYONLY)
