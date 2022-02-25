@@ -1,4 +1,6 @@
 #include "chemparse.hpp"
+#include "rang.hpp"
+
 #include <climits>
 
 void waitForExit() {
@@ -25,7 +27,7 @@ int main() {
 
     std::vector<chemparse::Element> elements =
         chemparse::parseFormulaToElements(chemFormula);
-    if (elements.size() == 0) {
+    if (elements.empty()) {
       std::cout << "Invalid or empty formula." << std::endl;
       continue;
     } else if (elements.size() == 1) {
