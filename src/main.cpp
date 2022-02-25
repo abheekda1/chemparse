@@ -1,18 +1,6 @@
 #include "chemparse.hpp"
 #include "rang.hpp"
 
-#include <climits>
-
-void waitForExit() {
-  std::cout << std::endl;
-  std::cout
-      << "PLEASE PRESS ENTER OR CLOSE THE WINDOW TO TERMINATE THE PROGRAM:"
-      << std::endl;
-  std::cin.clear();
-  std::cin.ignore(INT_MAX, '\n');
-  std::cin.get();
-}
-
 int main() {
   while (true) {
     std::cout << "> ";
