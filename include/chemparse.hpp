@@ -1,29 +1,30 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace chemparse {
-    class Element {
-    public:
-        std::string symbol;
-        std::string name;
-        double molarMass;
-        double atomicMass;
-        int atomicNumber;
-        std::string discoverer;
-        std::string appearance;
-        long amount;
-    };
+class Element {
+public:
+  std::string symbol;
+  std::string name;
+  double molarMass;
+  double atomicMass;
+  int atomicNumber;
+  std::string discoverer;
+  std::string appearance;
+  long amount;
+};
 
-    class Compound {
-    public:
-        explicit Compound(std::vector<Element> elements);
-        double getMolarMass();
-    private:
-        std::vector<Element> elements;
-    };
+class Compound {
+public:
+  explicit Compound(std::vector<Element> elements);
+  double getMolarMass();
 
-    std::vector<Element> parseFormulaToElements(std::string chemFormula);
+private:
+  std::vector<Element> elements;
+};
 
-    bool populateElement(Element &element);
-}// namespace chemparse
+std::vector<Element> parseFormulaToElements(std::string chemFormula);
+
+bool populateElement(Element &element);
+} // namespace chemparse

@@ -91,8 +91,6 @@ std::vector<Element> parseFormulaToElements(std::string chemFormula) {
             }
             element.amount = stol(amtString);
             i += numLength;
-            // element.amount = chemFormula[i + 1] - '0' /*convert to int from
-            // val stored in char*/; i++;
           } else {
             element.amount = 1;
           }
@@ -116,7 +114,7 @@ bool populateElement(Element &element) {
   std::string symbol = element.symbol;
 
   std::ifstream f("periodic-table.json");
-  std::string periodicTableData(reinterpret_cast<char*>(periodic_table));
+  std::string periodicTableData(reinterpret_cast<char *>(periodic_table));
 
   nlohmann::json elementData =
       nlohmann::json::parse(periodicTableData)["elements"];
