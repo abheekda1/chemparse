@@ -1,6 +1,8 @@
+#include <fstream>
+
 #include "chemparse.hpp"
 #include "json.hpp"
-#include <fstream>
+#include "periodictable.hpp"
 
 bool checkCapitalCase(char currentChar) {
   if (toupper(currentChar) == currentChar) {
@@ -114,16 +116,7 @@ bool populateElement(Element &element) {
   std::string symbol = element.symbol;
 
   std::ifstream f("periodic-table.json");
-  std::string periodicTableData;
-
-  if (f) {
-    std::stringstream ss;
-    ss << f.rdbuf();
-    periodicTableData = ss.str();
-  } else {
-    std::cout << "ERROR: Missing the periodic table JSON file!" << std::endl;
-    exit(1);
-  }
+  std::string periodicTableData(reinterpret_cast<char*>(periodic_table));
 
   nlohmann::json elementData =
       nlohmann::json::parse(periodicTableData)["elements"];
