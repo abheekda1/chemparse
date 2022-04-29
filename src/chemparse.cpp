@@ -132,11 +132,16 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
     if (chunk.find(')') != std::string::npos) {
       std::vector<std::string> splitFormula = splitString(chunk, ')');
       std::string subFormula = splitFormula.at(0);
+      std::string amtString;
       int amount = 0;
+      int numdigits = 0;
       if (isdigit(splitFormula.at(1)[0])) {
-        amount = splitFormula.at(1)[0] - '0';
-        // remove the first element since it has been added as the amount of the subformula
-        splitFormula.at(1).erase(0, 1);
+        while (isdigit(splitFormula.at(1)[numdigits])) {
+          amtString += splitFormula.at(1)[numdigits];
+          numdigits++;
+        }
+        splitFormula.at(1).erase(0, numdigits);
+        amount = std::stol(amtString);
       } else {
         amount = 1;
       }
