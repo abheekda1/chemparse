@@ -11,7 +11,8 @@ set(SOURCE
     src/periodictable.cpp
     )
 
-add_executable(chemparse
-        ${SOURCE}
-        src/main.cpp
-        )
+add_executable(chemparse-bin ${SOURCE} src/main.cpp)
+add_library(chemparse-lib ${SOURCE})
+
+set_target_properties(chemparse-bin PROPERTIES OUTPUT_NAME chemparse)
+set_target_properties(chemparse-lib PROPERTIES OUTPUT_NAME chemparse)
