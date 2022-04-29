@@ -13,12 +13,15 @@ int main() {
       exit(0);
     }
 
-    std::vector<chemparse::Element> elements =
-        chemparse::parseFormulaToElements(chemFormula);
-    if (elements.empty()) {
+    std::vector<chemparse::Compound> compounds =
+        chemparse::parseFormulaToCompounds(chemFormula);
+    if (compounds.empty()) {
       std::cout << "Invalid or empty formula." << std::endl;
       continue;
-    } else if (elements.size() == 1) {
+    }
+    
+    const std::vector<chemparse::Element> elements = chemparse::combineCompounds(compounds).getElements();
+    if (elements.size() == 1) {
       chemparse::Element element = elements[0];
       std::cout << element.name << " (" << element.symbol << ")"
                 << ": " << std::endl
@@ -32,7 +35,7 @@ int main() {
                    "this database)"
                 << std::endl;
     } else {
-      for (chemparse::Element &element : elements) {
+      for (const chemparse::Element &element : elements) {
         long amount = element.amount;
         std::string symbol = element.symbol;
         std::string name = element.name;
@@ -51,3 +54,4 @@ int main() {
     }
   }
 }
+

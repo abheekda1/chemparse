@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <fstream>
 
 #include "chemparse.hpp"
@@ -5,10 +6,23 @@
 #include "periodictable.hpp"
 
 bool checkCapitalCase(char currentChar) {
-  if (toupper(currentChar) == currentChar) {
-    return true;
+  return toupper(currentChar) == currentChar;
+}
+
+std::vector<std::string> splitString(const std::string &s, const char &c) {
+  std::vector<std::string> ret;
+  std::string temp;
+  for (int i = 0; i < s.length(); i++) {
+    if (s.at(i) == c) {
+      ret.push_back(temp);
+      temp.clear();
+      continue;
+    }
+
+    temp += s.at(i);
   }
-  return false;
+  ret.push_back(temp);
+  return ret;
 }
 
 namespace chemparse {
@@ -110,10 +124,37 @@ std::vector<Element> parseFormulaToElements(std::string chemFormula) {
   return elements;
 }
 
+std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
+  std::vector<Compound> compounds;
+  for (const auto& chunk : splitString(chemFormula, '(')) {
+    if (chunk.empty())
+      continue;
+    if (chunk.find(')') != std::string::npos) {
+      std::vector<std::string> splitFormula = splitString(chunk, ')');
+      std::string subFormula = splitFormula.at(0);
+      int amount = 0;
+      if (isdigit(splitFormula.at(1)[0])) {
+        amount = splitFormula.at(1)[0] - '0';
+        // remove the first element since it has been added as the amount of the subformula
+        splitFormula.at(1).erase(0, 1);
+      } else {
+        amount = 1;
+      }
+      // add the subformula and the next one to the compound vector
+      if (compounds.emplace_back(Compound(parseFormulaToElements(subFormula), amount)).getElements().empty())
+        return {}; // error because one of the elements failed to be parsed
+      if (compounds.emplace_back(Compound(parseFormulaToElements(splitFormula.at(1)), 1)).getElements().empty())
+        return {}; 
+    } else {
+      return {}; // equivalent of an error -- there must be a closing parenthesis for every opening one
+    }
+  }
+  return compounds;
+}
+
 bool populateElement(Element &element) {
   std::string symbol = element.symbol;
 
-  std::ifstream f("periodic-table.json");
   std::string periodicTableData(reinterpret_cast<char *>(periodic_table));
 
   nlohmann::json elementData =
@@ -136,7 +177,26 @@ bool populateElement(Element &element) {
   return foundElement;
 }
 
-Compound::Compound(std::vector<Element> elmnts) : elements(elmnts) {}
+Compound combineCompounds(std::vector<Compound> compounds) {
+  std::vector<Element> v;
+  int amtToReserve = 0;
+
+  for (const auto &c : compounds)
+    amtToReserve += v.size() + c.getElements().size();
+  
+  for (const auto &c : compounds) {
+    for (const auto &e : c.getElements()) {
+      Element temp = e;
+      temp.amount *= c.getAmount(); // multiply the amount of the element by the amount of the compound
+      v.push_back(temp);
+    }
+  }
+
+  // return the compound as just a list of elements
+  return Compound(v);
+}
+
+Compound::Compound(std::vector<Element> elmnts, int amt) : elements(elmnts), amount(amt)  {}
 
 double Compound::getMolarMass() {
   double molarMass = 0.0;
@@ -146,3 +206,4 @@ double Compound::getMolarMass() {
   return molarMass;
 }
 } // namespace chemparse
+
