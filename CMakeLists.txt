@@ -10,10 +10,13 @@ set(SOURCE
     )
 
 add_executable(chemparse-bin ${SOURCE} src/main.cpp)
-add_library(chemparse-lib ${SOURCE})
+add_library(chemparse-dynamic-lib SHARED ${SOURCE})
+add_library(chemparse-static-lib STATIC ${SOURCE})
 
 target_include_directories(chemparse-bin PUBLIC include)
-target_include_directories(chemparse-lib PUBLIC include)
+target_include_directories(chemparse-dynamic-lib PUBLIC include)
+target_include_directories(chemparse-static-lib PUBLIC include)
 
 set_target_properties(chemparse-bin PROPERTIES OUTPUT_NAME chemparse)
-set_target_properties(chemparse-lib PROPERTIES OUTPUT_NAME chemparse)
+set_target_properties(chemparse-dynamic-lib PROPERTIES OUTPUT_NAME chemparse)
+set_target_properties(chemparse-static-lib PROPERTIES OUTPUT_NAME chemparse)
