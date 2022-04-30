@@ -1,3 +1,5 @@
+#include <cstdio>
+#include <string>
 #include <vector>
 
 #include <chemparse/util/json.hpp>
@@ -126,42 +128,51 @@ std::vector<Element> parseFormulaToElements(std::string chemFormula) {
 
 std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
   std::vector<Compound> compounds;
-  for (const auto &chunk : splitString(chemFormula, '(')) {
-    if (chunk.empty())
-      continue;
-    if (chunk.find(')') != std::string::npos) {
-      std::vector<std::string> splitFormula = splitString(chunk, ')');
-      std::string subFormula = splitFormula.at(0);
-      std::string amtString;
-      int amount = 0;
-      int numdigits = 0;
-      if (isdigit(splitFormula.at(1)[0])) {
-        while (isdigit(splitFormula.at(1)[numdigits])) {
-          amtString += splitFormula.at(1)[numdigits];
-          numdigits++;
+  for (int i = 0; i < chemFormula.length(); i++) {
+    std::string currentFormula;
+    int amount = 0;
+    if (chemFormula.at(i) == '(') {
+      for (int j = i + 1; j < chemFormula.length(); j++) {
+        if (chemFormula.at(j) == ')') {
+          if (isdigit(chemFormula.at(j + 1))) {
+            int numDigits = 0;
+            std::string amtString;
+            while (isdigit(chemFormula.at(j + 1 + numDigits))) {
+              amtString += chemFormula.at(j + 1 + numDigits);
+              numDigits++;
+            }
+            i += numDigits;
+            amount = std::stol(amtString);
+          } else {
+            amount = 1;
+          }
+          i += j/* + 1*/; // move the cursor past the currently parsed location
+          break;
+        } else if (j == chemFormula.length() - 1) {
+          return {}; // invalid -- reached end of formula
         }
-        splitFormula.at(1).erase(0, numdigits);
-        amount = std::stol(amtString);
-      } else {
-        amount = 1;
+
+        currentFormula += chemFormula.at(j);  
       }
-      // add the subformula and the next one to the compound vector
-      if (compounds
-              .emplace_back(
-                  Compound(parseFormulaToElements(subFormula), amount))
-              .getElements()
-              .empty())
-        return {}; // error because one of the elements failed to be parsed
-      if (compounds
-              .emplace_back(
-                  Compound(parseFormulaToElements(splitFormula.at(1)), 1))
-              .getElements()
-              .empty())
-        return {};
     } else {
-      return {}; // equivalent of an error -- there must be a closing
-                 // parenthesis for every opening one
+      for (int j = i; j < chemFormula.length(); j++) {
+        if (chemFormula.at(j) == '(') {
+          amount = 1; 
+          i += j - 1;
+          break;
+        } else if (chemFormula.at(j) == ')') {
+          return {};
+        }
+
+        currentFormula += chemFormula.at(j);
+
+        if (j == chemFormula.length() - 1) {
+          amount = 1;
+          i = j;
+        }
+      }
     }
+    compounds.push_back(Compound(parseFormulaToElements(currentFormula), amount));
   }
   return compounds;
 }
