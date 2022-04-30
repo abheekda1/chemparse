@@ -1,5 +1,8 @@
-#include "chemparse.hpp"
-#include "rang.hpp"
+#include <iostream>
+#include <vector>
+
+#include "chemparse/chemparse.hpp"
+#include "chemparse/util/rang.hpp"
 
 int main() {
   while (true) {
