@@ -1,9 +1,9 @@
-#include <cstdlib>
-#include <fstream>
+#include <vector>
 
-#include "chemparse.hpp"
-#include "json.hpp"
-#include "periodictable.hpp"
+#include <chemparse/util/json.hpp>
+#include <chemparse/util/periodictable.hpp>
+
+#include "chemparse/chemparse.hpp"
 
 bool checkCapitalCase(char currentChar) {
   return toupper(currentChar) == currentChar;
@@ -26,7 +26,7 @@ std::vector<std::string> splitString(const std::string &s, const char &c) {
 }
 
 namespace chemparse {
-std::vector<Element> parseFormulaToElements(std::string chemFormula) {
+  std::vector<Element> parseFormulaToElements(std::string chemFormula) {
   std::vector<Element> elements;
 
   for (int i = 0; i < chemFormula.size(); i++) {
@@ -184,7 +184,7 @@ bool populateElement(Element &element) {
 
 Compound combineCompounds(std::vector<Compound> compounds) {
   std::vector<Element> v;
-  int amtToReserve = 0;
+  size_t amtToReserve = 0;
 
   for (const auto &c : compounds)
     amtToReserve += v.size() + c.getElements().size();
@@ -199,16 +199,6 @@ Compound combineCompounds(std::vector<Compound> compounds) {
 
   // return the compound as just a list of elements
   return Compound(v);
-}
-
-Compound::Compound(std::vector<Element> elmnts, int amt) : elements(elmnts), amount(amt)  {}
-
-double Compound::getMolarMass() {
-  double molarMass = 0.0;
-  for (chemparse::Element element : elements) {
-    molarMass += double(element.amount) * element.molarMass;
-  }
-  return molarMass;
 }
 } // namespace chemparse
 
