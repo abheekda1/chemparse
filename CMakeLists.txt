@@ -8,6 +8,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set(SOURCE
     src/chemparse/chemparse.cpp
+    src/chemparse/Compound.cpp
+    src/chemparse/Element.cpp
+    src/chemparse/Equation.cpp
     src/chemparse/util/periodictable.cpp
     )
 
