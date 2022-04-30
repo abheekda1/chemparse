@@ -26,7 +26,7 @@ std::vector<std::string> splitString(const std::string &s, const char &c) {
 }
 
 namespace chemparse {
-  std::vector<Element> parseFormulaToElements(std::string chemFormula) {
+std::vector<Element> parseFormulaToElements(std::string chemFormula) {
   std::vector<Element> elements;
 
   for (int i = 0; i < chemFormula.size(); i++) {
@@ -126,7 +126,7 @@ namespace chemparse {
 
 std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
   std::vector<Compound> compounds;
-  for (const auto& chunk : splitString(chemFormula, '(')) {
+  for (const auto &chunk : splitString(chemFormula, '(')) {
     if (chunk.empty())
       continue;
     if (chunk.find(')') != std::string::npos) {
@@ -146,12 +146,21 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
         amount = 1;
       }
       // add the subformula and the next one to the compound vector
-      if (compounds.emplace_back(Compound(parseFormulaToElements(subFormula), amount)).getElements().empty())
+      if (compounds
+              .emplace_back(
+                  Compound(parseFormulaToElements(subFormula), amount))
+              .getElements()
+              .empty())
         return {}; // error because one of the elements failed to be parsed
-      if (compounds.emplace_back(Compound(parseFormulaToElements(splitFormula.at(1)), 1)).getElements().empty())
-        return {}; 
+      if (compounds
+              .emplace_back(
+                  Compound(parseFormulaToElements(splitFormula.at(1)), 1))
+              .getElements()
+              .empty())
+        return {};
     } else {
-      return {}; // equivalent of an error -- there must be a closing parenthesis for every opening one
+      return {}; // equivalent of an error -- there must be a closing
+                 // parenthesis for every opening one
     }
   }
   return compounds;
@@ -188,11 +197,12 @@ Compound combineCompounds(std::vector<Compound> compounds) {
 
   for (const auto &c : compounds)
     amtToReserve += v.size() + c.getElements().size();
-  
+
   for (const auto &c : compounds) {
     for (const auto &e : c.getElements()) {
       Element temp = e;
-      temp.amount *= c.getAmount(); // multiply the amount of the element by the amount of the compound
+      temp.amount *= c.getAmount(); // multiply the amount of the element by the
+                                    // amount of the compound
       v.push_back(temp);
     }
   }
@@ -201,4 +211,3 @@ Compound combineCompounds(std::vector<Compound> compounds) {
   return Compound(v);
 }
 } // namespace chemparse
-

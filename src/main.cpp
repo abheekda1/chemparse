@@ -22,8 +22,9 @@ int main() {
       std::cout << "Invalid or empty formula." << std::endl;
       continue;
     }
-    
-    const std::vector<chemparse::Element> elements = chemparse::combineCompounds(compounds).getElements();
+
+    const std::vector<chemparse::Element> elements =
+        chemparse::combineCompounds(compounds).getElements();
     if (elements.size() == 1) {
       chemparse::Element element = elements[0];
       std::cout << element.name << " (" << element.symbol << ")"
@@ -57,4 +58,3 @@ int main() {
     }
   }
 }
-

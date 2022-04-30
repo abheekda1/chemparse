@@ -14,10 +14,11 @@ public:
 
   // member functions
   std::pair<std::vector<int>, std::vector<int>> balanceEquation();
+
 private:
   std::vector<Compound> reactants;
   std::vector<Compound> products;
 };
-}
+} // namespace chemparse
 
 #endif

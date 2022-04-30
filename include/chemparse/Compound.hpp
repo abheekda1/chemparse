@@ -14,6 +14,7 @@ public:
 
   inline std::vector<Element> getElements() const { return elements; };
   inline int getAmount() const { return amount; };
+
 private:
   std::vector<Element> elements;
   int amount;
