@@ -140,7 +140,9 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
             while (isdigit(chemFormula.at(j + 1 + numDigits))) {
               amtString += chemFormula.at(j + 1 + numDigits);
               numDigits++;
-              if (j + 1 + numDigits >= chemFormula.size()) // if it will be out of range in the next pass of the loop
+              if (j + 1 + numDigits >=
+                  chemFormula.size()) // if it will be out of range in the next
+                                      // pass of the loop
                 break;
             }
             i += numDigits;
@@ -148,18 +150,18 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
           } else {
             amount = 1;
           }
-          i += j/* + 1*/; // move the cursor past the currently parsed location
+          i += j /* + 1*/; // move the cursor past the currently parsed location
           break;
         } else if (j == chemFormula.length() - 1) {
           return {}; // invalid -- reached end of formula
         }
 
-        currentFormula += chemFormula.at(j);  
+        currentFormula += chemFormula.at(j);
       }
     } else {
       for (int j = i; j < chemFormula.length(); j++) {
         if (chemFormula.at(j) == '(') {
-          amount = 1; 
+          amount = 1;
           i += j - 1;
           break;
         } else if (chemFormula.at(j) == ')') {
@@ -174,7 +176,8 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
         }
       }
     }
-    compounds.push_back(Compound(parseFormulaToElements(currentFormula), amount));
+    compounds.push_back(
+        Compound(parseFormulaToElements(currentFormula), amount));
   }
   return compounds;
 }
