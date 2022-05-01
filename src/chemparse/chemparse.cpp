@@ -140,6 +140,8 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
             while (isdigit(chemFormula.at(j + 1 + numDigits))) {
               amtString += chemFormula.at(j + 1 + numDigits);
               numDigits++;
+              if (j + 1 + numDigits >= chemFormula.size()) // if it will be out of range in the next pass of the loop
+                break;
             }
             i += numDigits;
             amount = std::stol(amtString);
