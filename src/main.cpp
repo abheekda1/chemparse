@@ -1,10 +1,26 @@
 #include <iostream>
 #include <vector>
+#include <csignal>
 
 #include "chemparse/chemparse.hpp"
 #include "chemparse/util/rang.hpp"
 
+void signalHandler(int signum) {
+  switch (signum) {
+  case SIGINT:
+    std::cout << "\nExiting..." << std::endl;
+    exit(2);
+    break;
+  case SIGTERM:
+    std::cout << "\nExiting..." << std::endl;
+    exit(0);
+  }
+}
+
 int main() {
+  signal(SIGINT, signalHandler);
+  signal(SIGTERM, signalHandler);
+
   while (true) {
     std::cout << "> ";
 
@@ -12,8 +28,7 @@ int main() {
     std::cin >> chemFormula;
 
     if (chemFormula == "exit") {
-      std::cout << std::endl << "Exiting..." << std::endl;
-      exit(0);
+      raise(SIGTERM);
     }
 
     std::vector<chemparse::Compound> compounds =
