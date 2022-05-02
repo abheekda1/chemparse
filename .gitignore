@@ -1,5 +1,17 @@
+# jetbrains/clion
 .idea/
 cmake-build-debug/*
+
+# temp binaries + logs
+a.out
+*.log
+
+# clangd + cmake
 .cache/
 build/
+
+# backup files
 *.bak
+
+# debugging
+core
