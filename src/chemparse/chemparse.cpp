@@ -127,6 +127,8 @@ std::vector<Element> parseFormulaToElements(std::string chemFormula) {
 }
 
 std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
+  if (chemFormula.empty())
+    return {};
   std::vector<Compound> compounds;
   for (int i = 0; i < chemFormula.length(); i++) {
     std::string currentFormula;
@@ -176,8 +178,13 @@ std::vector<Compound> parseFormulaToCompounds(std::string chemFormula) {
         }
       }
     }
-    compounds.push_back(
-        Compound(parseFormulaToElements(currentFormula), amount));
+    if (compounds
+            .emplace_back(
+                Compound(parseFormulaToElements(currentFormula), amount))
+            .getElements()
+            .empty()) {
+      return {};
+    }
   }
   return compounds;
 }
