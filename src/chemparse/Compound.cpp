@@ -8,8 +8,8 @@ Compound::Compound(std::vector<Element> elmnts, int amt)
 
 double Compound::getMolarMass() {
   double molarMass = 0.0;
-  for (chemparse::Element element : elements) {
-    molarMass += double(element.amount) * element.molarMass;
+  for (const chemparse::Element &element : elements) {
+    molarMass += static_cast<double>(element.amount) * element.molarMass;
   }
   return molarMass;
 }
