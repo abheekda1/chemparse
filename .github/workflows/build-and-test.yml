@@ -25,7 +25,7 @@ jobs:
 
         # Catch2 installed by default
       - name: Test with Catch2
-        run: ./build/tests/tests
+        run: ./build/tests/tests -sd yes
         
   windows:
     runs-on: windows-latest
