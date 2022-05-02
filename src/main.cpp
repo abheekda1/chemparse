@@ -1,6 +1,6 @@
+#include <csignal>
 #include <iostream>
 #include <vector>
-#include <csignal>
 
 #include "chemparse/chemparse.hpp"
 #include "chemparse/util/rang.hpp"
