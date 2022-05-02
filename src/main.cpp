@@ -34,7 +34,8 @@ int main() {
     std::vector<chemparse::Compound> compounds =
         chemparse::parseFormulaToCompounds(chemFormula);
     if (compounds.empty()) {
-      std::cout << "Invalid or empty formula." << std::endl;
+      std::cout << rang::fg::red << "Invalid or empty formula."
+                << rang::fg::reset << std::endl;
       continue;
     }
 
