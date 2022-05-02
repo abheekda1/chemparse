@@ -28,13 +28,13 @@ int main() {
     if (elements.size() == 1) {
       chemparse::Element element = elements[0];
       std::cout << element.name << " (" << element.symbol << ")"
-                << ": " << std::endl
-                << "Atomic Number: " << element.atomicNumber << std::endl
-                << "Atomic Mass: " << element.atomicMass << " amu" << std::endl
-                << "Molar Mass: " << element.molarMass << " g/mol" << std::endl
-                << "Discoverer: " << element.discoverer << std::endl
-                << "Appearance: " << element.appearance << std::endl
-                << std::endl
+                << ": " << '\n'
+                << "Atomic Number: " << element.atomicNumber << '\n'
+                << "Atomic Mass: " << element.atomicMass << " amu" << '\n'
+                << "Molar Mass: " << element.molarMass << " g/mol" << '\n'
+                << "Discoverer: " << element.discoverer << '\n'
+                << "Appearance: " << element.appearance << '\n'
+                << '\n'
                 << "(HINT: 0 or empty values mean unknown or simply not in "
                    "this database)"
                 << std::endl;
@@ -50,10 +50,9 @@ int main() {
 
       chemparse::Compound compound(elements);
       compound.getMolarMass();
-      std::cout << std::endl;
-      std::cout << "The total molar mass is: " << compound.getMolarMass()
-                << " g/mol" << std::endl;
-      std::cout << "The total atomic mass is: " << compound.getMolarMass()
+      std::cout << "\nThe total molar mass is: " << compound.getMolarMass()
+                << " g/mol\n"
+                << "The total atomic mass is: " << compound.getMolarMass()
                 << " amu" << std::endl;
     }
   }
